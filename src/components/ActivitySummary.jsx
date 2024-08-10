@@ -1,16 +1,17 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { format } from 'date-fns';
+import { Bottle, Moon, Baby } from 'lucide-react';
 
 const ActivitySummary = ({ activities }) => {
   const recentActivities = activities.slice(0, 5);
 
-  const getActivityEmoji = (type) => {
+  const getActivityIcon = (type) => {
     switch (type) {
-      case 'Nap': return '💤';
-      case 'Diaper Change': return '🧷';
-      case 'Feeding': return '🍼';
-      default: return '📝';
+      case 'Nap': return <Moon className="h-5 w-5 text-blue-500" />;
+      case 'Diaper Change': return <Baby className="h-5 w-5 text-green-500" />;
+      case 'Feeding': return <Bottle className="h-5 w-5 text-yellow-500" />;
+      default: return null;
     }
   };
 
@@ -21,27 +22,27 @@ const ActivitySummary = ({ activities }) => {
       case 'Diaper Change':
         return activity.diaperType;
       case 'Feeding':
-        return activity.feedingType + (activity.amount ? ` (${activity.amount.toFixed(1)} oz)` : '');
+        return activity.feedingType;
       default:
         return '';
     }
   };
 
   return (
-    <Card>
+    <Card className="shadow-md">
       <CardHeader>
-        <CardTitle>Recent Activities</CardTitle>
+        <CardTitle className="text-xl text-gray-800">Recent Activities</CardTitle>
       </CardHeader>
       <CardContent>
-        <ul className="space-y-3">
+        <ul className="space-y-2">
           {recentActivities.map((activity) => (
-            <li key={activity.id} className="flex items-center space-x-3 bg-gray-50 p-2 rounded-lg">
-              <span className="text-2xl">{getActivityEmoji(activity.type)}</span>
+            <li key={activity.id} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-150 ease-in-out">
+              <span className="flex-shrink-0">{getActivityIcon(activity.type)}</span>
               <div className="flex-grow">
-                <div className="font-semibold">{activity.type}</div>
+                <div className="font-semibold text-gray-800">{activity.type}</div>
                 <div className="text-sm text-gray-600">{getActivityDetails(activity)}</div>
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-400">
                 {format(new Date(activity.timestamp), 'h:mm a')}
               </div>
             </li>

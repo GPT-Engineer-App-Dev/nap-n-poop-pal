@@ -23,17 +23,17 @@ const BabyTracker = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6">
-      <Card>
+      <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle>Baby Activity Tracker</CardTitle>
+          <CardTitle className="text-2xl">Baby Activity Tracker</CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="log">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="log">Activity Log</TabsTrigger>
-              <TabsTrigger value="nap">Nap</TabsTrigger>
-              <TabsTrigger value="diaper">Diaper</TabsTrigger>
-              <TabsTrigger value="feeding">Feeding</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4 mb-4">
+              <TabsTrigger value="log" className="text-sm">Activity Log</TabsTrigger>
+              <TabsTrigger value="nap" className="text-sm">Nap</TabsTrigger>
+              <TabsTrigger value="diaper" className="text-sm">Diaper</TabsTrigger>
+              <TabsTrigger value="feeding" className="text-sm">Feeding</TabsTrigger>
             </TabsList>
             <TabsContent value="log">
               <ActivityLog activities={activities} />
