@@ -1,34 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useAuth } from '../contexts/AuthContext';
-import { db } from '../firebase';
-import { collection, addDoc, onSnapshot, query, orderBy } from 'firebase/firestore';
 
 const MilestoneTracker = () => {
   const [milestones, setMilestones] = useState([]);
   const [newMilestone, setNewMilestone] = useState('');
-  const { user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      const q = query(collection(db, `users/${user.uid}/milestones`), orderBy('date', 'desc'));
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const milestonesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setMilestones(milestonesData);
-      });
-      return unsubscribe;
-    }
-  }, [user]);
-
-  const addMilestone = async () => {
-    if (newMilestone.trim() && user) {
-      await addDoc(collection(db, `users/${user.uid}/milestones`), {
-        description: newMilestone,
-        date: new Date()
-      });
+  const addMilestone = () => {
+    if (newMilestone.trim()) {
+      setMilestones([
+        { id: Date.now(), description: newMilestone, date: new Date() },
+        ...milestones
+      ]);
       setNewMilestone('');
     }
   };
