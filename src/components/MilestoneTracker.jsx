@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 const MilestoneTracker = () => {
   const [milestones, setMilestones] = useState([]);
@@ -38,7 +37,7 @@ const MilestoneTracker = () => {
               <li key={milestone.id} className="flex justify-between items-center">
                 <span>{milestone.description}</span>
                 <span className="text-sm text-gray-500">
-                  {new Date(milestone.date.toDate()).toLocaleDateString()}
+                  {milestone.date.toLocaleDateString()}
                 </span>
               </li>
             ))}
