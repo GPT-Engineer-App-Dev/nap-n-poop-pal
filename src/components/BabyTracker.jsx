@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,12 +8,17 @@ import DiaperTracker from './DiaperTracker';
 import FeedingTracker from './FeedingTracker';
 import SleepChart from './SleepChart';
 import ActivitySummary from './ActivitySummary';
+import generateMockData from '../utils/mockData';
 
 const BabyTracker = () => {
   const [activities, setActivities] = useState([]);
 
+  useEffect(() => {
+    setActivities(generateMockData(14)); // Generate 14 days of mock data
+  }, []);
+
   const addActivity = (activity) => {
-    setActivities([...activities, { ...activity, id: Date.now(), timestamp: new Date() }]);
+    setActivities([{ ...activity, id: Date.now(), timestamp: new Date() }, ...activities]);
   };
 
   return (
