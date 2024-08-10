@@ -1,14 +1,14 @@
 import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { format } from 'date-fns';
-import { Bottle, Moon, Baby } from 'lucide-react';
+import { Milk, Moon, Baby } from 'lucide-react';
 
 const ActivityLog = ({ activities }) => {
   const getActivityIcon = (type) => {
     switch (type) {
       case 'Nap': return <Moon className="h-5 w-5 text-blue-500" />;
       case 'Diaper Change': return <Baby className="h-5 w-5 text-green-500" />;
-      case 'Feeding': return <Bottle className="h-5 w-5 text-yellow-500" />;
+      case 'Feeding': return <Milk className="h-5 w-5 text-yellow-500" />;
       default: return null;
     }
   };
