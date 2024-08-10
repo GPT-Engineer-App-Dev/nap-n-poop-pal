@@ -23,17 +23,17 @@ const BabyTracker = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6">
-      <Card className="shadow-lg">
+      <Card className="shadow-lg bg-white/90 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Baby Activity Tracker</CardTitle>
+          <CardTitle className="text-2xl text-primary">Baby Activity Tracker</CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="log">
             <TabsList className="grid w-full grid-cols-4 mb-4">
-              <TabsTrigger value="log" className="text-sm">Activity Log</TabsTrigger>
-              <TabsTrigger value="nap" className="text-sm">Nap</TabsTrigger>
-              <TabsTrigger value="diaper" className="text-sm">Diaper</TabsTrigger>
-              <TabsTrigger value="feeding" className="text-sm">Feeding</TabsTrigger>
+              <TabsTrigger value="log" className="text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">Activity Log</TabsTrigger>
+              <TabsTrigger value="nap" className="text-sm data-[state=active]:bg-nap data-[state=active]:text-primary-foreground">Nap</TabsTrigger>
+              <TabsTrigger value="diaper" className="text-sm data-[state=active]:bg-diaper data-[state=active]:text-primary-foreground">Diaper</TabsTrigger>
+              <TabsTrigger value="feeding" className="text-sm data-[state=active]:bg-feeding data-[state=active]:text-primary-foreground">Feeding</TabsTrigger>
             </TabsList>
             <TabsContent value="log">
               <ActivityLog activities={activities} />

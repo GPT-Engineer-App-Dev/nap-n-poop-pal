@@ -8,9 +8,9 @@ const ActivitySummary = ({ activities }) => {
 
   const getActivityIcon = (type) => {
     switch (type) {
-      case 'Nap': return <Moon className="h-5 w-5 text-blue-500" />;
-      case 'Diaper Change': return <Baby className="h-5 w-5 text-green-500" />;
-      case 'Feeding': return <Milk className="h-5 w-5 text-yellow-500" />;
+      case 'Nap': return <Moon className="h-5 w-5 text-nap" />;
+      case 'Diaper Change': return <Baby className="h-5 w-5 text-diaper" />;
+      case 'Feeding': return <Milk className="h-5 w-5 text-feeding" />;
       default: return null;
     }
   };
@@ -29,14 +29,14 @@ const ActivitySummary = ({ activities }) => {
   };
 
   return (
-    <Card className="shadow-md">
+    <Card className="shadow-md bg-white/90 backdrop-blur-sm">
       <CardHeader>
-        <CardTitle className="text-xl text-gray-800">Recent Activities</CardTitle>
+        <CardTitle className="text-xl text-primary">Recent Activities</CardTitle>
       </CardHeader>
       <CardContent>
         <ul className="space-y-2">
           {recentActivities.map((activity) => (
-            <li key={activity.id} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-150 ease-in-out">
+            <li key={activity.id} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-muted transition-colors duration-150 ease-in-out">
               <span className="flex-shrink-0">{getActivityIcon(activity.type)}</span>
               <div className="flex-grow">
                 <div className="font-semibold text-gray-800">{activity.type}</div>

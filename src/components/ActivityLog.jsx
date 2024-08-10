@@ -6,9 +6,9 @@ import { Milk, Moon, Baby } from 'lucide-react';
 const ActivityLog = ({ activities }) => {
   const getActivityIcon = (type) => {
     switch (type) {
-      case 'Nap': return <Moon className="h-5 w-5 text-blue-500" />;
-      case 'Diaper Change': return <Baby className="h-5 w-5 text-green-500" />;
-      case 'Feeding': return <Milk className="h-5 w-5 text-yellow-500" />;
+      case 'Nap': return <Moon className="h-5 w-5 text-nap" />;
+      case 'Diaper Change': return <Baby className="h-5 w-5 text-diaper" />;
+      case 'Feeding': return <Milk className="h-5 w-5 text-feeding" />;
       default: return null;
     }
   };
@@ -33,7 +33,7 @@ const ActivityLog = ({ activities }) => {
       ) : (
         <div className="space-y-2">
           {activities.map((activity) => (
-            <div key={activity.id} className="flex items-center space-x-4 p-3 hover:bg-gray-50 transition-colors duration-150 ease-in-out">
+            <div key={activity.id} className="flex items-center space-x-4 p-3 hover:bg-muted transition-colors duration-150 ease-in-out rounded-lg">
               <div className="flex-shrink-0">{getActivityIcon(activity.type)}</div>
               <div className="flex-grow">
                 <p className="font-semibold text-gray-800">{activity.type}</p>
