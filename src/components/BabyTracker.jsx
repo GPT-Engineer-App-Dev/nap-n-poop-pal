@@ -8,18 +8,35 @@ import DiaperTracker from './DiaperTracker';
 import FeedingTracker from './FeedingTracker';
 import SleepChart from './SleepChart';
 import ActivitySummary from './ActivitySummary';
-import generateMockData from '../utils/mockData';
+import AnalyticsDashboard from './AnalyticsDashboard';
+import MilestoneTracker from './MilestoneTracker';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../contexts/AuthContext';
+import { db } from '../firebase';
+import { collection, query, orderBy, limit, addDoc, onSnapshot } from 'firebase/firestore';
 
 const BabyTracker = () => {
   const [activities, setActivities] = useState([]);
+  const { user } = useAuth();
 
   useEffect(() => {
-    setActivities(generateMockData(14)); // Generate 14 days of mock data
-  }, []);
+    if (user) {
+      const q = query(collection(db, `users/${user.uid}/activities`), orderBy('timestamp', 'desc'), limit(100));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const activitiesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setActivities(activitiesData);
+      });
+      return unsubscribe;
+    }
+  }, [user]);
 
-  const addActivity = (activity) => {
-    setActivities([{ ...activity, id: Date.now(), timestamp: new Date() }, ...activities]);
+  const addActivity = async (activity) => {
+    if (user) {
+      await addDoc(collection(db, `users/${user.uid}/activities`), {
+        ...activity,
+        timestamp: new Date()
+      });
+    }
   };
 
   return (
@@ -61,9 +78,13 @@ const BabyTracker = () => {
           </Tabs>
         </CardContent>
       </Card>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SleepChart activities={activities} />
-        <ActivitySummary activities={activities} />
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <SleepChart activities={activities} />
+          <ActivitySummary activities={activities} />
+        </div>
+        <AnalyticsDashboard activities={activities} />
+        <MilestoneTracker />
       </div>
     </div>
   );
