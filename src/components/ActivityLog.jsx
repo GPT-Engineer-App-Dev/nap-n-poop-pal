@@ -1,17 +1,9 @@
 import React from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { format } from 'date-fns';
-import { Milk, Moon, Baby } from 'lucide-react';
+import ActivityIcon from './ActivityIcon';
 
 const ActivityLog = ({ activities }) => {
-  const getActivityIcon = (type) => {
-    switch (type) {
-      case 'Nap': return <Moon className="h-5 w-5 text-nap" />;
-      case 'Diaper Change': return <Baby className="h-5 w-5 text-diaper" />;
-      case 'Feeding': return <Milk className="h-5 w-5 text-feeding" />;
-      default: return null;
-    }
-  };
 
   const getActivityDetails = (activity) => {
     switch (activity.type) {
@@ -34,7 +26,7 @@ const ActivityLog = ({ activities }) => {
         <div className="space-y-2">
           {activities.map((activity) => (
             <div key={activity.id} className="flex items-center space-x-4 p-3 hover:bg-muted transition-colors duration-150 ease-in-out rounded-lg">
-              <div className="flex-shrink-0">{getActivityIcon(activity.type)}</div>
+              <ActivityIcon type={activity.type} className="flex-shrink-0" />
               <div className="flex-grow">
                 <p className="font-semibold text-gray-800">{activity.type}</p>
                 <p className="text-sm text-gray-600">{getActivityDetails(activity)}</p>

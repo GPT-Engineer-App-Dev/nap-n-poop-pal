@@ -9,6 +9,7 @@ import FeedingTracker from './FeedingTracker';
 import SleepChart from './SleepChart';
 import ActivitySummary from './ActivitySummary';
 import generateMockData from '../utils/mockData';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const BabyTracker = () => {
   const [activities, setActivities] = useState([]);
@@ -35,22 +36,32 @@ const BabyTracker = () => {
               <TabsTrigger value="diaper" className="text-sm data-[state=active]:bg-diaper data-[state=active]:text-primary-foreground">Diaper</TabsTrigger>
               <TabsTrigger value="feeding" className="text-sm data-[state=active]:bg-feeding data-[state=active]:text-primary-foreground">Feeding</TabsTrigger>
             </TabsList>
-            <TabsContent value="log">
-              <ActivityLog activities={activities} />
-            </TabsContent>
-            <TabsContent value="nap">
-              <NapTracker addActivity={addActivity} />
-            </TabsContent>
-            <TabsContent value="diaper">
-              <DiaperTracker addActivity={addActivity} />
-            </TabsContent>
-            <TabsContent value="feeding">
-              <FeedingTracker addActivity={addActivity} />
-            </TabsContent>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activities.length}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.2 }}
+              >
+                <TabsContent value="log">
+                  <ActivityLog activities={activities} />
+                </TabsContent>
+                <TabsContent value="nap">
+                  <NapTracker addActivity={addActivity} />
+                </TabsContent>
+                <TabsContent value="diaper">
+                  <DiaperTracker addActivity={addActivity} />
+                </TabsContent>
+                <TabsContent value="feeding">
+                  <FeedingTracker addActivity={addActivity} />
+                </TabsContent>
+              </motion.div>
+            </AnimatePresence>
           </Tabs>
         </CardContent>
       </Card>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <SleepChart activities={activities} />
         <ActivitySummary activities={activities} />
       </div>
